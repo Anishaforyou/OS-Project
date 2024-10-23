@@ -8,10 +8,14 @@ const addProcessBtn = document.getElementById('addProcessBtn');
 const addMemoryBlockBtn = document.getElementById('addMemoryBlockBtn');
 const calculateBtn = document.getElementById('calculateBtn');
 const deallocateBtn = document.getElementById('deallocateBtn');
+const clearBtn = document.getElementById('clearBtn');
 const strategySelect = document.getElementById('strategySelect');
 const memoryBlockSizeInput = document.getElementById('memoryBlockSize');
 const memoryError = document.getElementById('memoryError');
 const processError = document.getElementById('processError');
+const memoryBlockList = document.getElementById('memoryBlockList');
+const processList = document.getElementById('processList');
+const currentStrategy = document.getElementById('currentStrategy');
 
 // Add memory block based on user input
 addMemoryBlockBtn.addEventListener('click', () => {
@@ -21,7 +25,7 @@ addMemoryBlockBtn.addEventListener('click', () => {
         memoryBlockSizeInput.value = '';
         memoryError.style.display = 'none';
         drawMemory();
-        alert(`Memory block of ${size} KB added`);
+        updateMemoryBlockList();
     } else {
         memoryError.style.display = 'block';
     }
@@ -34,15 +38,26 @@ addProcessBtn.addEventListener('click', () => {
         processes.push(size);
         processSizeInput.value = '';
         processError.style.display = 'none';
-        alert(`Process of ${size} KB added`);
+        updateProcessList();
     } else {
         processError.style.display = 'block';
     }
 });
 
+// Clear memory blocks and process sizes
+clearBtn.addEventListener('click', () => {
+    memoryBlocks = [];
+    processes = [];
+    drawMemory();
+    updateMemoryBlockList();
+    updateProcessList();
+    currentStrategy.textContent = '';
+});
+
 // Allocate memory based on the selected strategy
 calculateBtn.addEventListener('click', () => {
     const strategy = strategySelect.value;
+    currentStrategy.textContent = `Running: ${strategy} strategy`;
     processes.forEach(process => {
         if (strategy === 'firstFit') {
             firstFit(process);
@@ -62,8 +77,18 @@ deallocateBtn.addEventListener('click', () => {
         block.processSize = null;
     });
     drawMemory();
-    alert('All memory blocks have been deallocated');
+    currentStrategy.textContent = 'All memory blocks have been deallocated';
 });
+
+// Function to update memory block list display
+function updateMemoryBlockList() {
+    memoryBlockList.innerHTML = `Memory Blocks: ${memoryBlocks.map(block => `${block.size} KB`).join(', ')}`;
+}
+
+// Function to update process list display
+function updateProcessList() {
+    processList.innerHTML = `Processes: ${processes.join(', ')} KB`;
+}
 
 function firstFit(processSize) {
     for (let block of memoryBlocks) {
@@ -115,20 +140,11 @@ function drawMemory() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let x = 10, y = 10, width = 80, height = 50;
 
-    memoryBlocks.forEach(block => {
-        ctx.strokeStyle = '#000';
-        ctx.strokeRect(x, y, width, height);
-        if (block.free) {
-            ctx.fillStyle = '#90EE90'; // Free block (green)
-            ctx.fillRect(x, y, width, height);
-        } else {
-            ctx.fillStyle = '#FF6347'; // Allocated block (red)
-            ctx.fillRect(x, y, width, height);
-            ctx.fillStyle = '#000';
-            ctx.fillText(`${block.processSize} KB`, x + 10, y + 25);
-        }
-        y += height + 10;
+    memoryBlocks.forEach((block, index) => {
+        ctx.fillStyle = block.free ? 'lightgreen' : 'lightcoral';
+        ctx.fillRect(x, y + index * (height + 10), width, height);
+        ctx.strokeRect(x, y + index * (height + 10), width, height);
+        ctx.fillStyle = 'black';
+        ctx.fillText(`${block.size} KB (${block.free ? 'Free' : `Used by ${block.processSize} KB`})`, x + 10, y + index * (height + 10) + 25);
     });
 }
-
-drawMemory();
