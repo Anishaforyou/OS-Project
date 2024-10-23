@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #E4EA8C;
+    background: linear-gradient(135deg, #E4EA8C, #90C695); /* New linear gradient */
     margin: 0;
     padding: 0;
 }
@@ -9,6 +9,8 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    background: rgba(255, 255, 255, 0.8); /* Add a slight background to container for better readability */
+    border-radius: 10px;
 }
 
 h1, h2 {
@@ -34,53 +36,20 @@ label, select, input, button {
     margin-right: auto;
 }
 
-.calcalculate-btn {
-    background-color: #140953; 
+.memoryBlock-btn, .Process-btn, .calculate-btn, .deallocate-btn {
+    background: linear-gradient(135deg, #140953, #3A205F); /* Gradient for buttons */
     color: rgb(242, 238, 243);
     border: none;
     padding: 8px 10px;
-    font-size: 10px;
-    border-radius: 5px;
-    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-
-.deallocate-btn {
-    background-color: #140953; 
-    color: rgb(242, 238, 243);
-    border: none;
-    padding: 8px 10px;
-    font-size: 10px;
-    border-radius: 5px;
-    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-
-.memoryBlock-btn {
-    background-color:#140953; 
-    color: rgb(242, 238, 243);
-    border: none;
-    padding: 8px 10px;
-    font-size: 10px;
-    border-radius: 5px;
-    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-
-.Process-btn {
-    background-color: #140953;
-    color: rgb(242, 238, 243);
-    border: none;
-    padding: 8px 10px;
-    font-size: 10px;
+    font-size: 12px;
     border-radius: 5px;
     box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.3);
     cursor: pointer;
 }
 
 .clear-btn {
-    background-color: #CB0000; /* Deep Blue */
-    color: rgb(20, 19, 20);
+    background: linear-gradient(135deg, #CB0000, #FF5A5F); /* Gradient for clear button */
+    color: rgb(242, 238, 243);
     border: none;
     padding: 10px 20px;
     font-size: 16px;
@@ -90,9 +59,46 @@ label, select, input, button {
 }
 
 .clear-btn:hover {
-    background-color: #fcf6f5;
+    background: #fcf6f5;
 }
 
 .clear-btn:active {
     transform: translateY(2px);
+}
+/* Responsive for tablets and smaller screens */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    input, button, select {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+    }
+
+    #memoryCanvas {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Responsive for mobile phones */
+@media (max-width: 480px) {
+    h1, h2 {
+        font-size: 1.5em;
+    }
+
+    .container {
+        padding: 5px;
+    }
+
+    input, button, select {
+        font-size: 14px;
+    }
+
+    #memoryCanvas {
+        width: 100%;
+        height: auto;
+    }
 }
