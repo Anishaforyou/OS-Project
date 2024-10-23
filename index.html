@@ -14,16 +14,18 @@
             <h2>Initialize Memory Blocks</h2>
             <label for="memoryBlockSize">Enter memory block size (in KB): </label>
             <input type="number" id="memoryBlockSize" placeholder="Size in KB" min="1">
-            <button id="addMemoryBlockBtn">Add Memory Block</button>
+            <button id="addMemoryBlockBtn" class="memoryBlock-btn">Add Memory Block</button>
             <p id="memoryError" style="color: red; display: none;">Please enter a valid memory block size.</p>
+            <div id="memoryBlockList"></div>
         </div>
 
         <div class="input-section">
             <h2>Input Process Sizes</h2>
             <label for="processSize">Enter process size (in KB): </label>
             <input type="number" id="processSize" placeholder="Size in KB" min="1">
-            <button id="addProcessBtn">Add Process</button>
+            <button id="addProcessBtn" class="Process-btn">Add Process</button>
             <p id="processError" style="color: red; display: none;">Please enter a valid process size.</p>
+            <div id="processList"></div>
         </div>
 
         <div class="strategy-section">
@@ -33,14 +35,19 @@
                 <option value="bestFit">Best Fit</option>
                 <option value="worstFit">Worst Fit</option>
             </select>
-            <button id="calculateBtn">Calculate Allocation</button>
-            <button id="deallocateBtn">Deallocate All</button>
+            <button id="calculateBtn" class="calculate-btn">Calculate Allocation</button>
+            <button id="deallocateBtn" class="deallocate-btn">Deallocate All</button>
+        </div>
+
+        <div class="clear-section">
+            <button id="clearBtn" class="clear-btn">Clear Old Values</button>
         </div>
 
         <h2>Memory Blocks Visualization</h2>
         <canvas id="memoryCanvas" width="500" height="300"></canvas>
+        <p id="currentStrategy"></p>
     </div>
 
-    <script src="script.js"></script>
+    <script src="logic.js"></script>
 </body>
 </html>
